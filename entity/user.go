@@ -8,9 +8,8 @@ import (
 
 type User struct {
 	Id        uint `gorm:"primaryKey"`
-	Name      string
+	Username  string
 	Email     string
-	Phone     string
 	Password  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
