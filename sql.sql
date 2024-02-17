@@ -16,7 +16,7 @@
     deleted_at TIMESTAMP
   );
 
-  CREATE TABLE news(
+  CREATE TABLE news_articles(
     id BIGSERIAL PRIMARY KEY,
     category_id BIGINT NOT NULL,
     content VARCHAR NOT NULL,
