@@ -6,7 +6,8 @@ import (
 )
 
 type RouterOpts struct {
-	AuthHandler handler.AuthHandler
+	AuthHandler     handler.AuthHandler
+	CategoryHandler handler.CategoryHandler
 }
 
 func NewRouter(opts RouterOpts) *gin.Engine {
@@ -16,6 +17,8 @@ func NewRouter(opts RouterOpts) *gin.Engine {
 
 	public := r.Group("")
 	public.POST("/login", opts.AuthHandler.HandleLogin)
+	public.GET("/categories", opts.CategoryHandler.GetAllCategories)
+	public.GET("/categories/:category-id", opts.CategoryHandler.GetCategoryDetail)
 
 	return r
 }

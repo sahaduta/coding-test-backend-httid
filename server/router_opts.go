@@ -13,13 +13,17 @@ func GetRouterOpts(db *gorm.DB) RouterOpts {
 	bcryptHasher := hasher.NewBcryptHasher()
 	jwt := token.NewJWTHelper()
 
-	// ===== Users =====
 	authRepo := repository.NewAuthRepository(db)
 	authUsecase := usecase.NewAuthUsecase(authRepo, jwt, bcryptHasher)
 	authHandler := handler.NewAuthHandler(authUsecase)
 
+	categoryRepo := repository.NewCategoryRepository(db)
+	categoryUsecase := usecase.NewCategoryUsecase(categoryRepo)
+	categoryHandler := handler.NewCategoryHandler(categoryUsecase)
+
 	opts := RouterOpts{
-		AuthHandler: *authHandler,
+		AuthHandler:     authHandler,
+		CategoryHandler: categoryHandler,
 	}
 
 	return opts

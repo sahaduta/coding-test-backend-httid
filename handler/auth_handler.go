@@ -10,17 +10,21 @@ import (
 	"github.com/sahaduta/coding-test-backend-httid/usecase"
 )
 
-type AuthHandler struct {
+type AuthHandler interface {
+	HandleLogin(ctx *gin.Context)
+}
+
+type authHandler struct {
 	authUsecase usecase.AuthUsecase
 }
 
-func NewAuthHandler(authUsecase usecase.AuthUsecase) *AuthHandler {
-	return &AuthHandler{
+func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {
+	return &authHandler{
 		authUsecase: authUsecase,
 	}
 }
 
-func (ah *AuthHandler) HandleLogin(ctx *gin.Context) {
+func (ah *authHandler) HandleLogin(ctx *gin.Context) {
 	var loginRequest dto.LoginRequest
 	err := ctx.ShouldBindJSON(&loginRequest)
 	if err != nil {
