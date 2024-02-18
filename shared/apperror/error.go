@@ -12,4 +12,7 @@ var (
 
 	// 404
 	ErrCategoryIdNotFound = errors.New("category id not found")
+
+	// 500
+	ErrInternal = errors.New("internal error")
 )
