@@ -36,9 +36,7 @@ func (uc *customPageUsecase) GetAllCustomPages(ctx context.Context, payload *dto
 
 	customPages, err := uc.customPageRepository.FindAllCustomPages(ctx, payload)
 	if err != nil {
-		if !errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, err
-		}
+		return nil, err
 	}
 
 	items := make([]*dto.CustomPageResponse, 0)
@@ -55,9 +53,6 @@ func (uc *customPageUsecase) GetAllCustomPages(ctx context.Context, payload *dto
 		Items:     items,
 		TotalItem: totalItem,
 		TotalPage: totalPage,
-	}
-	if err != nil {
-		return nil, err
 	}
 
 	return &customPagesResponse, nil

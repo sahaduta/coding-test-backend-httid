@@ -28,17 +28,17 @@ func NewCustomPageRepository(db *gorm.DB) CustomPageRepository {
 
 func (r *customPageRepository) FindAllCustomPages(ctx context.Context, payload *dto.CustomPagesRequest) ([]*entity.CustomPage, error) {
 	customPage := entity.CustomPage{}
-	categories := make([]*entity.CustomPage, 0)
+	customPages := make([]*entity.CustomPage, 0)
 	q := r.db.WithContext(ctx).Model(&customPage).
 		Where("content ILIKE ?", "%"+payload.Search+"%").
 		Limit(payload.Limit).
 		Order(payload.SortBy + " " + payload.Sort).
 		Offset((payload.Page - 1) * payload.Limit)
-	err := q.Find(&categories).Error
+	err := q.Find(&customPages).Error
 	if err != nil {
 		return nil, err
 	}
-	return categories, nil
+	return customPages, nil
 }
 
 func (r *customPageRepository) Count(ctx context.Context, payload *dto.CustomPagesRequest) (int, error) {

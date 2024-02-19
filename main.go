@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"errors"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,18 +12,20 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/sahaduta/coding-test-backend-httid/database"
+	"github.com/sahaduta/coding-test-backend-httid/pkg/logger"
 	"github.com/sahaduta/coding-test-backend-httid/server"
 )
 
 func main() {
+	logger.SetLogrusLogger()
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf(err.Error())
+		logger.Log.Fatalf(err.Error())
 	}
 
 	db, err := database.NewConn()
 	if err != nil {
-		log.Fatal("fail to connect to database")
+		logger.Log.Fatal("fail to connect to database")
 	}
 
 	r := server.NewRouter(server.GetRouterOpts(db))
@@ -36,22 +37,22 @@ func main() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Printf("listen: %s\n", err)
+			logger.Log.Infof("listen: %s\n", err)
 		}
 	}()
 
 	quit := make(chan os.Signal)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	log.Println("Shutting down server...")
+	logger.Log.Infof("Shutting down server...")
 
 	secondValue, _ := strconv.Atoi(os.Getenv("SHUTDOWN_TIME"))
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(secondValue)*time.Second)
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown:", err)
+		logger.Log.Fatal("Server forced to shutdown:", err)
 	}
 
-	log.Println("Server exiting")
+	logger.Log.Infof("Server exiting")
 }

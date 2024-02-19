@@ -35,9 +35,7 @@ func (uc *newsArticleUsecase) GetAllNewsArticles(ctx context.Context, payload *d
 
 	newsArticles, err := uc.newsArticleRepository.FindAllNewsArticles(ctx, payload)
 	if err != nil {
-		if !errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, err
-		}
+		return nil, err
 	}
 
 	items := make([]*dto.NewsArticleResponse, 0)

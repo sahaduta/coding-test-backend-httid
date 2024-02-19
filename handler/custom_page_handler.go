@@ -33,13 +33,13 @@ func (h *customPageHandler) GetAllCustomPages(ctx *gin.Context) {
 
 	sanitizeCustomPagesParam(&param)
 
-	categories, err := h.customPageUsecase.GetAllCustomPages(ctx.Request.Context(), &param)
+	customPagesResponse, err := h.customPageUsecase.GetAllCustomPages(ctx.Request.Context(), &param)
 	if err != nil {
 		ctx.Error(err)
 		return
 	}
 	resp := dto.Response{
-		Data: categories,
+		Data: customPagesResponse,
 	}
 	ctx.JSON(http.StatusOK, resp)
 }

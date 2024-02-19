@@ -34,13 +34,13 @@ func (h *newsArticleHandler) GetAllNewsArticles(ctx *gin.Context) {
 
 	sanitizeNewsArticlesParam(&param)
 
-	categories, err := h.newsArticleUsecase.GetAllNewsArticles(ctx.Request.Context(), &param)
+	newsArticlesResponse, err := h.newsArticleUsecase.GetAllNewsArticles(ctx.Request.Context(), &param)
 	if err != nil {
 		ctx.Error(err)
 		return
 	}
 	resp := dto.Response{
-		Data: categories,
+		Data: newsArticlesResponse,
 	}
 	ctx.JSON(http.StatusOK, resp)
 }

@@ -30,17 +30,17 @@ func NewNewsArticleRepository(db *gorm.DB) NewsArticleRepository {
 
 func (r *newsArticleRepository) FindAllNewsArticles(ctx context.Context, payload *dto.NewsArticlesRequest) ([]*entity.NewsArticle, error) {
 	newsArticle := entity.NewsArticle{}
-	categories := make([]*entity.NewsArticle, 0)
+	newsArticles := make([]*entity.NewsArticle, 0)
 	q := r.db.WithContext(ctx).Model(&newsArticle).
 		Where("content ILIKE ?", "%"+payload.Search+"%").
 		Limit(payload.Limit).
 		Order(payload.SortBy + " " + payload.Sort).
 		Offset((payload.Page - 1) * payload.Limit)
-	err := q.Find(&categories).Error
+	err := q.Find(&newsArticles).Error
 	if err != nil {
 		return nil, err
 	}
-	return categories, nil
+	return newsArticles, nil
 }
 
 func (r *newsArticleRepository) Count(ctx context.Context, payload *dto.NewsArticlesRequest) (int, error) {

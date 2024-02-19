@@ -11,6 +11,7 @@ type RouterOpts struct {
 	CategoryHandler    handler.CategoryHandler
 	NewsArticleHandler handler.NewsArticleHandler
 	CustomPageHandler  handler.CustomPageHandler
+	CommentHandler     handler.CommentHandler
 }
 
 func NewRouter(opts RouterOpts) *gin.Engine {
@@ -22,6 +23,8 @@ func NewRouter(opts RouterOpts) *gin.Engine {
 
 	public := r.Group("")
 	public.POST("/login", opts.AuthHandler.HandleLogin)
+	public.POST("/comments/", opts.CommentHandler.CreateComment)
+	public.GET("/comments/:news-article-id", opts.CommentHandler.GetCommentsByNewsArticleId)
 
 	private := r.Group("")
 	private.Use(middleware.HandleAuth())
