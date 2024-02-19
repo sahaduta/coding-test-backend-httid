@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- Go 1.8>
+- Go 1.8 and up
 - PostgreSQL
 
 ## User Login
