@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/sahaduta/coding-test-backend-httid/dto"
 	"github.com/sahaduta/coding-test-backend-httid/entity"
@@ -13,7 +14,10 @@ import (
 type CategoryRepository interface {
 	FindAllCategories(ctx context.Context, payload *dto.CategoriesRequest) ([]*entity.Category, error)
 	Count(ctx context.Context, payload *dto.CategoriesRequest) (int, error)
-	FindCategoryDetail(ctx context.Context, productClassification *entity.Category) (*entity.Category, error)
+	FindCategoryDetail(ctx context.Context, productClassification entity.Category) (*entity.Category, error)
+	CreateCategory(ctx context.Context, category *entity.Category) (uint, error)
+	UpdateCategory(ctx context.Context, category *entity.Category) error
+	DeleteCategory(ctx context.Context, category *entity.Category) error
 }
 type categoryRepository struct {
 	db *gorm.DB
@@ -55,7 +59,7 @@ func (r *categoryRepository) Count(ctx context.Context, payload *dto.CategoriesR
 	return int(total), nil
 }
 
-func (r *categoryRepository) FindCategoryDetail(ctx context.Context, category *entity.Category) (*entity.Category, error) {
+func (r *categoryRepository) FindCategoryDetail(ctx context.Context, category entity.Category) (*entity.Category, error) {
 	q := r.db.WithContext(ctx).Model(&category).
 		Where("categories.id = ?", category.Id)
 	err := q.First(&category).Error
@@ -67,5 +71,30 @@ func (r *categoryRepository) FindCategoryDetail(ctx context.Context, category *e
 			return nil, err
 		}
 	}
-	return category, nil
+	return &category, nil
+}
+
+func (r *categoryRepository) CreateCategory(ctx context.Context, category *entity.Category) (uint, error) {
+	result := r.db.WithContext(ctx).Model(&entity.Category{}).Create(&category)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+	return category.Id, nil
+}
+
+func (r *categoryRepository) UpdateCategory(ctx context.Context, category *entity.Category) error {
+	fmt.Println(category)
+	err := r.db.WithContext(ctx).Updates(category).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *categoryRepository) DeleteCategory(ctx context.Context, category *entity.Category) error {
+	err := r.db.WithContext(ctx).Delete(category).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }

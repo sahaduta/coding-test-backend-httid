@@ -11,7 +11,8 @@ var (
 	ErrInvalidCategoryId = errors.New("invalid category id")
 
 	// 404
-	ErrCategoryIdNotFound = errors.New("category id not found")
+	ErrCategoryIdNotFound    = errors.New("category id not found")
+	ErrNewsArticleIdNotFound = errors.New("news article id not found")
 
 	// 500
 	ErrInternal = errors.New("internal error")

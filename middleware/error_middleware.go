@@ -8,10 +8,9 @@ import (
 	"github.com/sahaduta/coding-test-backend-httid/shared/apperror"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func HandleErrors(db *gorm.DB) gin.HandlerFunc {
+func HandleErrors() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.Next()
 

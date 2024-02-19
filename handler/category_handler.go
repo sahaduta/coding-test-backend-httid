@@ -15,6 +15,9 @@ import (
 type CategoryHandler interface {
 	GetAllCategories(ctx *gin.Context)
 	GetCategoryDetail(ctx *gin.Context)
+	CreateCategory(ctx *gin.Context)
+	UpdateCategory(ctx *gin.Context)
+	DeleteCategory(ctx *gin.Context)
 }
 
 type categoryHandler struct {
@@ -62,6 +65,81 @@ func (h *categoryHandler) GetCategoryDetail(ctx *gin.Context) {
 		Data: categoryResponse,
 	}
 	ctx.JSON(http.StatusOK, resp)
+}
+
+func (h *categoryHandler) CreateCategory(ctx *gin.Context) {
+	categoryRequest := dto.CategoryRequest{}
+	err := ctx.ShouldBindJSON(&categoryRequest)
+	if err != nil {
+		ctx.Error(apperror.ErrInvalidInput)
+		return
+	}
+	category := entity.Category{
+		Name: categoryRequest.Name,
+	}
+	createdId, err := h.categoryUsecase.CreateCategory(ctx, &category)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+	resp := dto.Response{
+		Data: gin.H{constant.UserId: createdId},
+	}
+	ctx.JSON(http.StatusCreated, resp)
+}
+
+func (h *categoryHandler) UpdateCategory(ctx *gin.Context) {
+	param := ctx.Param("category-id")
+	categoryId, err := strconv.Atoi(param)
+	if err != nil {
+		ctx.Error(apperror.ErrInvalidCategoryId)
+		return
+	}
+
+	categoryRequest := dto.CategoryRequest{}
+	err = ctx.ShouldBindJSON(&categoryRequest)
+	if err != nil {
+		ctx.Error(apperror.ErrInvalidInput)
+		return
+	}
+
+	category := entity.Category{
+		Id:   uint(categoryId),
+		Name: categoryRequest.Name,
+	}
+
+	err = h.categoryUsecase.UpdateCategory(ctx, &category)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+
+	resp := dto.Response{
+		Data: dto.EmptyData{},
+	}
+	ctx.JSON(http.StatusCreated, resp)
+}
+
+func (h *categoryHandler) DeleteCategory(ctx *gin.Context) {
+	param := ctx.Param("category-id")
+	categoryId, err := strconv.Atoi(param)
+	if err != nil {
+		ctx.Error(apperror.ErrInvalidCategoryId)
+		return
+	}
+
+	category := entity.Category{Id: uint(categoryId)}
+
+	err = h.categoryUsecase.DeleteCategory(ctx, &category)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+
+	resp := dto.Response{
+		Data: dto.EmptyData{},
+	}
+	ctx.JSON(http.StatusCreated, resp)
 }
 
 func sanitizeCategoriesParam(param *dto.CategoriesRequest) {
