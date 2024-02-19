@@ -22,3 +22,5 @@
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/25681406-3f8e63b4-c899-4d04-a513-a49a7b7ea2ce?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D25681406-3f8e63b4-c899-4d04-a513-a49a7b7ea2ce%26entityType%3Dcollection%26workspaceId%3Dcd89d349-9008-4934-8a09-f8736b6e72de)
