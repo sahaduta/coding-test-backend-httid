@@ -14,7 +14,7 @@ import (
 type CategoryUsecase interface {
 	GetAllCategories(ctx context.Context, payload *dto.CategoriesRequest) (*dto.CategoriesResponse, error)
 	FindCategoryDetail(ctx context.Context, category *entity.Category) (*entity.Category, error)
-	CreateCategory(ctx context.Context, payload *entity.Category) (uint, error)
+	CreateCategory(ctx context.Context, category *entity.Category) (uint, error)
 	UpdateCategory(ctx context.Context, category *entity.Category) error
 	DeleteCategory(ctx context.Context, category *entity.Category) error
 }
@@ -66,8 +66,8 @@ func (uc *categoryUsecase) FindCategoryDetail(ctx context.Context, payload *enti
 	return uc.categoryRepository.FindCategoryDetail(ctx, *payload)
 }
 
-func (uc *categoryUsecase) CreateCategory(ctx context.Context, payload *entity.Category) (uint, error) {
-	return uc.categoryRepository.CreateCategory(ctx, payload)
+func (uc *categoryUsecase) CreateCategory(ctx context.Context, category *entity.Category) (uint, error) {
+	return uc.categoryRepository.CreateCategory(ctx, category)
 }
 
 func (uc *categoryUsecase) UpdateCategory(ctx context.Context, category *entity.Category) error {

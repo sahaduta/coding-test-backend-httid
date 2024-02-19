@@ -14,7 +14,7 @@ import (
 type CategoryRepository interface {
 	FindAllCategories(ctx context.Context, payload *dto.CategoriesRequest) ([]*entity.Category, error)
 	Count(ctx context.Context, payload *dto.CategoriesRequest) (int, error)
-	FindCategoryDetail(ctx context.Context, productClassification entity.Category) (*entity.Category, error)
+	FindCategoryDetail(ctx context.Context, category entity.Category) (*entity.Category, error)
 	CreateCategory(ctx context.Context, category *entity.Category) (uint, error)
 	UpdateCategory(ctx context.Context, category *entity.Category) error
 	DeleteCategory(ctx context.Context, category *entity.Category) error

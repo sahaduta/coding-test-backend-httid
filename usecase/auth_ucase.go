@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/sahaduta/coding-test-backend-httid/dto"
 	"github.com/sahaduta/coding-test-backend-httid/entity"
@@ -13,7 +12,7 @@ import (
 )
 
 type AuthUsecase interface {
-	Login(ctx context.Context, payload *entity.User) (string, error)
+	Login(ctx context.Context, user *entity.User) (string, error)
 }
 
 type authUsecase struct {
@@ -26,8 +25,8 @@ func NewAuthUsecase(authRepo repository.AuthRepository, jwt token.JWTManager, ha
 	return &authUsecase{authRepo: authRepo, jwt: jwt, hasher: hasher}
 }
 
-func (uc *authUsecase) Login(ctx context.Context, payload *entity.User) (string, error) {
-	user, err := uc.authRepo.FindOneByUsername(ctx, payload.Username)
+func (uc *authUsecase) Login(ctx context.Context, user *entity.User) (string, error) {
+	user, err := uc.authRepo.FindOneByUsername(ctx, user.Username)
 	if err != nil {
 		return "", err
 	}
@@ -35,12 +34,10 @@ func (uc *authUsecase) Login(ctx context.Context, payload *entity.User) (string,
 		return "", apperror.ErrInvalidCred
 	}
 
-	err = uc.hasher.ComparePasswords([]byte(user.Password), []byte(payload.Password))
-	fmt.Println(err)
+	err = uc.hasher.ComparePasswords([]byte(user.Password), []byte(user.Password))
 	if err != nil {
 		return "", apperror.ErrInvalidCred
 	}
-	fmt.Println("aaaaaaaa")
 	tokenPayload := dto.TokenPayload{
 		UserId: user.Id,
 	}

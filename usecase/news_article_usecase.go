@@ -14,7 +14,7 @@ import (
 type NewsArticleUsecase interface {
 	GetAllNewsArticles(ctx context.Context, payload *dto.NewsArticlesRequest) (*dto.NewsArticlesResponse, error)
 	FindNewsArticleDetail(ctx context.Context, newsArticle *entity.NewsArticle) (*entity.NewsArticle, error)
-	CreateNewsArticle(ctx context.Context, payload *entity.NewsArticle) (uint, error)
+	CreateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) (uint, error)
 	UpdateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error
 	DeleteNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error
 }
@@ -66,8 +66,8 @@ func (uc *newsArticleUsecase) FindNewsArticleDetail(ctx context.Context, payload
 	return uc.newsArticleRepository.FindNewsArticleDetail(ctx, *payload)
 }
 
-func (uc *newsArticleUsecase) CreateNewsArticle(ctx context.Context, payload *entity.NewsArticle) (uint, error) {
-	return uc.newsArticleRepository.CreateNewsArticle(ctx, payload)
+func (uc *newsArticleUsecase) CreateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) (uint, error) {
+	return uc.newsArticleRepository.CreateNewsArticle(ctx, newsArticle)
 }
 
 func (uc *newsArticleUsecase) UpdateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error {

@@ -15,7 +15,7 @@ import (
 type CustomPageUsecase interface {
 	GetAllCustomPages(ctx context.Context, payload *dto.CustomPagesRequest) (*dto.CustomPagesResponse, error)
 	FindCustomPageDetail(ctx context.Context, customPage *entity.CustomPage) (*entity.CustomPage, error)
-	CreateCustomPage(ctx context.Context, payload *entity.CustomPage) (uint, error)
+	CreateCustomPage(ctx context.Context, customPage *entity.CustomPage) (uint, error)
 	UpdateCustomPage(ctx context.Context, payload *dto.CustomPageRequest) error
 	DeleteCustomPage(ctx context.Context, customPage *entity.CustomPage) error
 }

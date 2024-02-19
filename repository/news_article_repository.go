@@ -13,7 +13,7 @@ import (
 type NewsArticleRepository interface {
 	FindAllNewsArticles(ctx context.Context, payload *dto.NewsArticlesRequest) ([]*entity.NewsArticle, error)
 	Count(ctx context.Context, payload *dto.NewsArticlesRequest) (int, error)
-	FindNewsArticleDetail(ctx context.Context, productClassification entity.NewsArticle) (*entity.NewsArticle, error)
+	FindNewsArticleDetail(ctx context.Context, newsArticle entity.NewsArticle) (*entity.NewsArticle, error)
 	CreateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) (uint, error)
 	UpdateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error
 	DeleteNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error

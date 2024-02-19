@@ -11,7 +11,7 @@ import (
 type CustomPageRepository interface {
 	FindAllCustomPages(ctx context.Context, payload *dto.CustomPagesRequest) ([]*entity.CustomPage, error)
 	Count(ctx context.Context, payload *dto.CustomPagesRequest) (int, error)
-	FindCustomPageDetail(ctx context.Context, productClassification entity.CustomPage) (*entity.CustomPage, error)
+	FindCustomPageDetail(ctx context.Context, customPage entity.CustomPage) (*entity.CustomPage, error)
 	CreateCustomPage(ctx context.Context, customPage *entity.CustomPage) (uint, error)
 	UpdateCustomPage(ctx context.Context, customPage *entity.CustomPage) error
 	DeleteCustomPage(ctx context.Context, customPage *entity.CustomPage) error
