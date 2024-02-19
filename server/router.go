@@ -20,6 +20,7 @@ func NewRouter(opts RouterOpts) *gin.Engine {
 	r.ContextWithFallback = true
 
 	r.Use(middleware.HandleErrors())
+	r.Use(middleware.HandleLogging())
 
 	public := r.Group("")
 	public.POST("/login", opts.AuthHandler.HandleLogin)

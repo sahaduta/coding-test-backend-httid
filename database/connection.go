@@ -6,6 +6,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 func NewConn() (*gorm.DB, error) {
@@ -20,7 +21,7 @@ func NewConn() (*gorm.DB, error) {
 		host, port, user, password, dbname)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		Logger: nil,
+		Logger: logger.Default.LogMode(logger.Error),
 	})
 	if err != nil {
 		return nil, err
