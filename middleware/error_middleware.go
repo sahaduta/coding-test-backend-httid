@@ -36,6 +36,8 @@ func HandleErrors() gin.HandlerFunc {
 				ctx.AbortWithStatusJSON(http.StatusNotFound, resp)
 			case errors.Is(err, apperror.ErrNewsArticleIdNotFound):
 				ctx.AbortWithStatusJSON(http.StatusNotFound, resp)
+			case errors.Is(err, apperror.ErrCustomUrlNotFound):
+				ctx.AbortWithStatusJSON(http.StatusNotFound, resp)
 
 			// 500
 			default:

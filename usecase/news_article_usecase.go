@@ -16,7 +16,7 @@ type NewsArticleUsecase interface {
 	FindNewsArticleDetail(ctx context.Context, newsArticle *entity.NewsArticle) (*entity.NewsArticle, error)
 	CreateNewsArticle(ctx context.Context, payload *entity.NewsArticle) (uint, error)
 	UpdateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error
-	DeleteNewsArticle(ctx context.Context, address *entity.NewsArticle) error
+	DeleteNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error
 }
 
 func NewNewsArticleUsecase(newsArticleRepository repository.NewsArticleRepository) NewsArticleUsecase {

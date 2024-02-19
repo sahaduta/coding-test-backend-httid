@@ -86,7 +86,7 @@ func (h *newsArticleHandler) CreateNewsArticle(ctx *gin.Context) {
 		return
 	}
 	resp := dto.Response{
-		Data: gin.H{constant.UserId: createdId},
+		Data: gin.H{"id": createdId},
 	}
 	ctx.JSON(http.StatusCreated, resp)
 }

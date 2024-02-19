@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/sahaduta/coding-test-backend-httid/dto"
 	"github.com/sahaduta/coding-test-backend-httid/entity"
@@ -82,7 +81,6 @@ func (r *newsArticleRepository) CreateNewsArticle(ctx context.Context, newsArtic
 }
 
 func (r *newsArticleRepository) UpdateNewsArticle(ctx context.Context, newsArticle *entity.NewsArticle) error {
-	fmt.Println(newsArticle)
 	err := r.db.WithContext(ctx).Updates(newsArticle).Error
 	if err != nil {
 		return err

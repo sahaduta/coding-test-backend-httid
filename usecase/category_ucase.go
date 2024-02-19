@@ -16,7 +16,7 @@ type CategoryUsecase interface {
 	FindCategoryDetail(ctx context.Context, category *entity.Category) (*entity.Category, error)
 	CreateCategory(ctx context.Context, payload *entity.Category) (uint, error)
 	UpdateCategory(ctx context.Context, category *entity.Category) error
-	DeleteCategory(ctx context.Context, address *entity.Category) error
+	DeleteCategory(ctx context.Context, category *entity.Category) error
 }
 
 func NewCategoryUsecase(categoryRepository repository.CategoryRepository) CategoryUsecase {

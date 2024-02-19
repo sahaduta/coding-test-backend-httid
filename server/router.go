@@ -10,6 +10,7 @@ type RouterOpts struct {
 	AuthHandler        handler.AuthHandler
 	CategoryHandler    handler.CategoryHandler
 	NewsArticleHandler handler.NewsArticleHandler
+	CustomPageHandler  handler.CustomPageHandler
 }
 
 func NewRouter(opts RouterOpts) *gin.Engine {
@@ -35,6 +36,12 @@ func NewRouter(opts RouterOpts) *gin.Engine {
 	private.POST("/news-article/", opts.NewsArticleHandler.CreateNewsArticle)
 	private.PUT("/news-article/:news-article-id", opts.NewsArticleHandler.UpdateNewsArticle)
 	private.DELETE("/news-article/:news-article-id", opts.NewsArticleHandler.DeleteNewsArticle)
+
+	private.GET("/custom-page", opts.CustomPageHandler.GetAllCustomPages)
+	private.GET("/custom-page/:custom-url", opts.CustomPageHandler.GetCustomPageDetail)
+	private.POST("/custom-page/", opts.CustomPageHandler.CreateCustomPage)
+	private.PUT("/custom-page/:custom-url", opts.CustomPageHandler.UpdateCustomPage)
+	private.DELETE("/custom-page/:custom-url", opts.CustomPageHandler.DeleteCustomPage)
 
 	return r
 }

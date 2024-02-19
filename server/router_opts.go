@@ -25,10 +25,15 @@ func GetRouterOpts(db *gorm.DB) RouterOpts {
 	newsArticleUsecase := usecase.NewNewsArticleUsecase(newsArticleRepo)
 	newsArticleHandler := handler.NewNewsArticleHandler(newsArticleUsecase)
 
+	customPageRepo := repository.NewCustomPageRepository(db)
+	customPageUsecase := usecase.NewCustomPageUsecase(customPageRepo)
+	customPageHandler := handler.NewCustomPageHandler(customPageUsecase)
+
 	opts := RouterOpts{
 		AuthHandler:        authHandler,
 		CategoryHandler:    categoryHandler,
 		NewsArticleHandler: newsArticleHandler,
+		CustomPageHandler:  customPageHandler,
 	}
 
 	return opts
