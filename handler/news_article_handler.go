@@ -144,7 +144,7 @@ func (h *newsArticleHandler) DeleteNewsArticle(ctx *gin.Context) {
 	resp := dto.Response{
 		Data: dto.EmptyData{},
 	}
-	ctx.JSON(http.StatusNoContent, resp)
+	ctx.JSON(http.StatusOK, resp)
 }
 
 func sanitizeNewsArticlesParam(param *dto.NewsArticlesRequest) {
