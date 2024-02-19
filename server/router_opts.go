@@ -21,9 +21,14 @@ func GetRouterOpts(db *gorm.DB) RouterOpts {
 	categoryUsecase := usecase.NewCategoryUsecase(categoryRepo)
 	categoryHandler := handler.NewCategoryHandler(categoryUsecase)
 
+	newsArticleRepo := repository.NewNewsArticleRepository(db)
+	newsArticleUsecase := usecase.NewNewsArticleUsecase(newsArticleRepo)
+	newsArticleHandler := handler.NewNewsArticleHandler(newsArticleUsecase)
+
 	opts := RouterOpts{
-		AuthHandler:     authHandler,
-		CategoryHandler: categoryHandler,
+		AuthHandler:        authHandler,
+		CategoryHandler:    categoryHandler,
+		NewsArticleHandler: newsArticleHandler,
 	}
 
 	return opts

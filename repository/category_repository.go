@@ -51,7 +51,6 @@ func (r *categoryRepository) Count(ctx context.Context, payload *dto.CategoriesR
 		Where("name ILIKE ?", "%"+payload.Search+"%").
 		Limit(payload.Limit).
 		Count(&total).
-		Offset((payload.Page - 1) * payload.Limit).
 		Error
 	if err != nil {
 		return 0, err

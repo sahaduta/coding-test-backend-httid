@@ -117,7 +117,7 @@ func (h *categoryHandler) UpdateCategory(ctx *gin.Context) {
 	resp := dto.Response{
 		Data: dto.EmptyData{},
 	}
-	ctx.JSON(http.StatusCreated, resp)
+	ctx.JSON(http.StatusOK, resp)
 }
 
 func (h *categoryHandler) DeleteCategory(ctx *gin.Context) {
@@ -139,7 +139,7 @@ func (h *categoryHandler) DeleteCategory(ctx *gin.Context) {
 	resp := dto.Response{
 		Data: dto.EmptyData{},
 	}
-	ctx.JSON(http.StatusCreated, resp)
+	ctx.JSON(http.StatusNoContent, resp)
 }
 
 func sanitizeCategoriesParam(param *dto.CategoriesRequest) {

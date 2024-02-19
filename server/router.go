@@ -7,8 +7,9 @@ import (
 )
 
 type RouterOpts struct {
-	AuthHandler     handler.AuthHandler
-	CategoryHandler handler.CategoryHandler
+	AuthHandler        handler.AuthHandler
+	CategoryHandler    handler.CategoryHandler
+	NewsArticleHandler handler.NewsArticleHandler
 }
 
 func NewRouter(opts RouterOpts) *gin.Engine {
@@ -20,11 +21,20 @@ func NewRouter(opts RouterOpts) *gin.Engine {
 
 	public := r.Group("")
 	public.POST("/login", opts.AuthHandler.HandleLogin)
-	public.GET("/categories", opts.CategoryHandler.GetAllCategories)
-	public.GET("/categories/:category-id", opts.CategoryHandler.GetCategoryDetail)
-	public.POST("/categories/", opts.CategoryHandler.CreateCategory)
-	public.PUT("/categories/:category-id", opts.CategoryHandler.UpdateCategory)
-	public.DELETE("/categories/:category-id", opts.CategoryHandler.DeleteCategory)
+
+	private := r.Group("")
+	private.Use(middleware.HandleAuth())
+	private.GET("/categories", opts.CategoryHandler.GetAllCategories)
+	private.GET("/categories/:category-id", opts.CategoryHandler.GetCategoryDetail)
+	private.POST("/categories/", opts.CategoryHandler.CreateCategory)
+	private.PUT("/categories/:category-id", opts.CategoryHandler.UpdateCategory)
+	private.DELETE("/categories/:category-id", opts.CategoryHandler.DeleteCategory)
+
+	private.GET("/news-article", opts.NewsArticleHandler.GetAllNewsArticles)
+	private.GET("/news-article/:news-article-id", opts.NewsArticleHandler.GetNewsArticleDetail)
+	private.POST("/news-article/", opts.NewsArticleHandler.CreateNewsArticle)
+	private.PUT("/news-article/:news-article-id", opts.NewsArticleHandler.UpdateNewsArticle)
+	private.DELETE("/news-article/:news-article-id", opts.NewsArticleHandler.DeleteNewsArticle)
 
 	return r
 }

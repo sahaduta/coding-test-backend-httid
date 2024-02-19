@@ -17,7 +17,6 @@ var (
 	Timeout      = os.Getenv("APP_TIMEOUT_LIMIT")
 
 	UserId         = "UserId"
-	UserRole       = "Role"
 	DefaultTimeout = 5
 )
 
