@@ -21,9 +21,17 @@ func HandleErrors() gin.HandlerFunc {
 			}
 
 			switch {
-			// 401
+			// 400
+			case errors.Is(err, apperror.ErrInvalidCategoryId):
+				ctx.AbortWithStatusJSON(http.StatusBadRequest, resp)
+			case errors.Is(err, apperror.ErrInvalidCustomUrl):
+				ctx.AbortWithStatusJSON(http.StatusBadRequest, resp)
+			case errors.Is(err, apperror.ErrInvalidNewsArticleId):
+				ctx.AbortWithStatusJSON(http.StatusBadRequest, resp)
 			case errors.Is(err, apperror.ErrInvalidInput):
 				ctx.AbortWithStatusJSON(http.StatusBadRequest, resp)
+
+			// 401
 			case errors.Is(err, apperror.ErrInvalidCred):
 				ctx.AbortWithStatusJSON(http.StatusUnauthorized, resp)
 			case errors.Is(err, apperror.ErrNotAuthorized):
