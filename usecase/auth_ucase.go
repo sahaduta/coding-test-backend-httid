@@ -26,7 +26,7 @@ func NewAuthUsecase(authRepo repository.AuthRepository, jwt token.JWTManager, ha
 }
 
 func (uc *authUsecase) Login(ctx context.Context, user *entity.User) (string, error) {
-	user, err := uc.authRepo.FindOneByUsername(ctx, user.Username)
+	existingUser, err := uc.authRepo.FindOneByUsername(ctx, user.Username)
 	if err != nil {
 		return "", err
 	}
@@ -34,12 +34,12 @@ func (uc *authUsecase) Login(ctx context.Context, user *entity.User) (string, er
 		return "", apperror.ErrInvalidCred
 	}
 
-	err = uc.hasher.ComparePasswords([]byte(user.Password), []byte(user.Password))
+	err = uc.hasher.ComparePasswords([]byte(existingUser.Password), []byte(user.Password))
 	if err != nil {
 		return "", apperror.ErrInvalidCred
 	}
 	tokenPayload := dto.TokenPayload{
-		UserId: user.Id,
+		UserId: existingUser.Id,
 	}
 	tokenString, err := uc.jwt.GenerateToken(&tokenPayload)
 	if err != nil {

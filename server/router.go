@@ -22,6 +22,7 @@ func NewRouter(opts RouterOpts) *gin.Engine {
 	r.Use(middleware.HandleErrors())
 	r.Use(middleware.HandleLogging())
 	r.Use(middleware.HandleTimeout())
+	// r.Use(middleware.HandleXApiKey())
 
 	public := r.Group("")
 	public.POST("/login", opts.AuthHandler.HandleLogin)
